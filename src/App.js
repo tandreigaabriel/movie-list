@@ -18,10 +18,14 @@ function App() {
 
       <Content style={{ padding: '0 50px' }}>
         <Home />
-       
+
 
       </Content>
-      <Footer style={{ textAlign: 'center' }}> <Icon type="copyright" /> 2019 Created by TAG </Footer>
+
+      <Footer style={{ textAlign: 'center' }}>
+        <Icon type="copyright" />
+        2019 Created by TAG
+      </Footer>
     </Layout>
 
 

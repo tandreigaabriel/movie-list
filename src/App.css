@@ -1,34 +1,28 @@
 html {
-  
 }
 body {
   min-height: 100%;
 }
 
 h1.ant-typography {
-    color: rgb(240, 242, 245);
+  color: rgb(240, 242, 245);
 }
 
 .ant-input {
-    padding: 24px;
+  padding: 24px;
 }
 
-
-
 main.ant-layout-content {
-
-
 }
 
 footer.ant-layout-footer {
-    color: white;
-    text-align: center;
+  color: white;
+  text-align: center;
 }
 
 .ant-layout-footer {
-    background-color: blue;
+  background-color: blue;
 }
-
 
 #components-layout-demo-top .logo {
   width: 120px;
@@ -36,4 +30,18 @@ footer.ant-layout-footer {
   background: rgba(255, 255, 255, 0.2);
   margin: 16px 24px 16px 0;
   float: left;
+}
+
+.result_poster img {
+  min-height: 100px;
+  max-width: 100%;
+}
+
+.result_item {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.ant-input {
+  padding: 10px;
 }
