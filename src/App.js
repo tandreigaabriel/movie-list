@@ -22,9 +22,9 @@ function App() {
 
       </Content>
 
-      <Footer style={{ textAlign: 'center' }}>
+      <Footer style={{ textAlign: 'center', }}>
         <Icon type="copyright" />
-        2019 Created by TAG
+        2019 Scoala Informala de IT
       </Footer>
     </Layout>
 
