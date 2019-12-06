@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { Fragment } from "react";
 import { Card, Button, Icon } from 'antd'
 
 const { Meta } = Card;
 
 const IMAGE_PATH = 'https://image.tmdb.org/t/p/w200/'
 
+
 const MovieList = props => {
-    const { movies, onRemoveMovie } = props;
+    const { movies, onRemoveMovie, onRatingChange } = props;
     return movies.map(movie => {
         return (
             <Card
@@ -18,16 +19,42 @@ const MovieList = props => {
                     />
                 }
                 actions={[
-
-                    
-                    <Button type="danger" shape="round"  onClick={() => onRemoveMovie(movie.id)}>
-                       <Icon type="delete" theme="filled" />Delete 
-                       
+                    <Button
+                        key="delete"
+                        type="danger"
+                        shape="round"
+                        onClick={() => onRemoveMovie(movie.id)}
+                    >
+                        <Icon type="delete" theme="filled" />
+                        Remove
           </Button>
-          
                 ]}
             >
-                <Meta title={movie.title} description={movie.overview} />
+                <Meta
+                    title={movie.title}
+                    description={
+                        <Fragment>
+                            <div className="movie_genres">{movie.genres}</div>
+                            <div className="movie_votes">
+                                {movie.vote_average}
+                                <div className="movie_rating">
+                                    {[...Array(10)].map((item, i) => (
+                                        <Icon
+                                            key={i}
+                                            type="star"
+                                            theme={movie.rating && movie.rating > i && "filled"}
+                                            onClick={() => onRatingChange(movie.id, i)}
+                                        />
+                                    ))}
+                                    {movie.rating && (
+                                        <span className="movie_rating_value">{movie.rating}</span>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="movie_description">{movie.overview}</div>
+                        </Fragment>
+                    }
+                />
             </Card>
         );
     });

@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react'
-import { Row, Col, Input, Button } from 'antd'
-import axios from 'axios'
+import { Row, Col, Input, Button } from 'antd';
+import axios from 'axios';
 
-import settings from '../../../config'
-import  ResultList  from './ResultList/ResultList'
-import MovieList from './MovieList/MovieList'
+import settings from '../../../config';
+import ResultList from './ResultList/ResultList';
+import MovieList from './MovieList/MovieList';
 
 
 
@@ -13,10 +13,18 @@ export class Home extends Component {
         searchTerm: "",
         results: [],
         savedMovies: [],
+        genres: [],
         isLoading: false
     };
 
     componentDidMount() {
+        // Save the genres to state on mount to use in the app later
+        const url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${settings.APIKEY}&language=en-US`;
+        this.setState({ isLoading: true });
+        axios.get(url).then(res => {
+            this.setState({ genres: res.data.genres, isLoading: false });
+        });
+
         const savedMovies = JSON.parse(localStorage.getItem("saved-movies"));
         if (savedMovies) {
             this.setState({ savedMovies }, () => {
@@ -61,28 +69,68 @@ export class Home extends Component {
     };
 
     handleAddMovie = movie => {
-        const { savedMovies } = this.state;
-        savedMovies.push(movie);
-        this.setState({ savedMovies, results: [] , searchTerm:"",});
-        localStorage.setItem(
-            "saved-movies",
-            JSON.stringify(this.state.savedMovies)
-        );
+        const { savedMovies, genres } = this.state;
+
+        // Get the genre name for each genre id of the movie and put them into a string
+        const movieGenres = movie.genre_ids
+            .map(genre => genres.find(item => item.id === genre).name)
+            .join(", ");
+
+        // every time a movie is added to our list, add another key to the movie object that contains the movieGenre string
+        // and the rating key that is null at first
+        savedMovies.push({ ...movie, genres: movieGenres, rating: null });
+
+        // Alternative method but different logic
+        // (here we loop trough the genre array and find matching ids, instead of looping trought movie.genre_ids)
+        //
+        // const getMovieGenres = () => {
+        //   const movieGenres = [];
+        //   genres.forEach(genre => {
+        //     if (movie.genre_ids.indexOf(genre.id) >= 0) {
+        //       movieGenres.push(genre.name);
+        //     }
+        //   });
+        //   return movieGenres.join(", ");
+        // };
+        // savedMovies.push({ ...movie, genres: getMovieGenres() });
+
+        this.setState({ savedMovies, results: [], searchTerm: "" }, () => {
+            localStorage.setItem(
+                "saved-movies",
+                JSON.stringify(this.state.savedMovies)
+            );
+        });
     };
 
     handleRemoveMovie = movieId => {
-        // const {savedMovies} = this.state;
-        // const foundIndex = savedMovies.findIndex(item => item.id === movieId);
-        // const movies = savedMovies.slice(foundIndex, 1);
-        // this.setState({
-        //     savedMovies:movies
-        // })
-
         const savedMovies = this.state.savedMovies.filter(
             item => item.id !== movieId
         );
-        localStorage.setItem("saved-movies", JSON.stringify(savedMovies));
-        this.setState({ savedMovies });
+
+        this.setState({ savedMovies }, () => {
+            localStorage.setItem(
+                "saved-movies",
+                JSON.stringify(this.state.savedMovies)
+            );
+        });
+    };
+
+    handleRatingChange = (movieId, i) => {
+        // map through savedMovies and search for the movie by comparing the ids
+        // then change the rating value of the movie to (index + 1) of the icon that was clicked
+        const savedMovies = this.state.savedMovies.map(item => {
+            if (item.id === movieId) {
+                item.rating = i + 1;
+            }
+            return item;
+        });
+        // update the state and then the localStorage
+        this.setState({ savedMovies }, () => {
+            localStorage.setItem(
+                "saved-movies",
+                JSON.stringify(this.state.savedMovies)
+            );
+        });
     };
 
     render = () => {
@@ -117,7 +165,6 @@ export class Home extends Component {
 
                 <Row>
                     <Col span={10} offset={6} className="result_container">
-
                         <ResultList
                             savedMovies={this.state.savedMovies}
                             results={this.state.results}
@@ -131,6 +178,7 @@ export class Home extends Component {
                             <MovieList
                                 movies={this.state.savedMovies}
                                 onRemoveMovie={this.handleRemoveMovie}
+                                onRatingChange={this.handleRatingChange}
                             />
                         )}
                     </Col>

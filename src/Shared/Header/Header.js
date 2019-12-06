@@ -10,7 +10,7 @@ const { Header:AntdHeader } = Layout;
 const Header = () => {
     return (
         <AntdHeader>
-            <Title>Movie List App</Title>
+            <Title> -= Movie List App =-</Title>
         </AntdHeader>
     );
 }
