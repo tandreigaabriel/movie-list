@@ -24,7 +24,7 @@ function App() {
 
       <Footer style={{ textAlign: 'center', }}>
         <Icon type="copyright" />
-        2019 Scoala Informala de IT
+        2019 Toma Andrei Gabriel
       </Footer>
     </Layout>
 

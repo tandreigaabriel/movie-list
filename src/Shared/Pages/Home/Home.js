@@ -18,7 +18,7 @@ export class Home extends Component {
     };
 
     componentDidMount() {
-        // Save the genres to state on mount to use in the app later
+        // Save the generes to state on mount to use in the app later
         const url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${settings.APIKEY}&language=en-US`;
         this.setState({ isLoading: true });
         axios.get(url).then(res => {

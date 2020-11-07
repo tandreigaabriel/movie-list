@@ -22,18 +22,18 @@ const ResultList = props => {
                     <span>{item.vote_average}</span>
                 </Col>
                 <Col span={3}>
-                    <span>{item.release_date.slice(0, 4)}</span>
+                    <span>{item.release_date ? item.release_date.slice(0, 4) : "-"}</span>
                 </Col>
                 <Col span={4} className="result_add">
                     {savedMovies.some(movie => movie.id === item.id) ? (
                         <Button type="secondary" block ghost disabled>
                             <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />   Saved
-            </Button>
+                        </Button>
                     ) : (
                             <Button type="primary" block ghost onClick={() => onAddMovie(item)}>
                                 <Icon type="plus" />
                                 Save
-            </Button>
+                            </Button>
                         )}
                 </Col>
             </Row>
