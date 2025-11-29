@@ -4,6 +4,7 @@ import { Row, Col, Input, Button, Spin } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 
+
 import ResultList from "../components/ResultList";
 import MovieList from "../components/MovieList";
 import TrendingList from "../components/TrendingList";
