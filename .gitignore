@@ -1,24 +1,44 @@
-# Logs
-logs
-*.log
+# ============================================
+# Node / Vite / React project ignore list
+# ============================================
+
+# Node modules
+node_modules/
+
+# Build output
+dist/
+build/
+.cache/
+vite.cache/
+
+# Local environment variables
+.env
+.env.local
+.env.*.local
+
+# Log files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Editor folders
+.idea/
+.vscode/
+*.swp
+*.swo
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# OS files
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
+
+# Optional: prevent commit of lock file (if team uses multiple package managers)
+# package-lock.json
+# yarn.lock
+
+# Netlify deploy folder (local CLI)
+.netlify/
+
+# Misc
+*.local

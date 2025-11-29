@@ -9,7 +9,7 @@ import MovieList from "../components/MovieList";
 import TrendingList from "../components/TrendingList";
 import MovieModal from "../components/MovieModal";
 
-const API_KEY = "1c8a878d17348a7bb8ae4f2a94037fee";
+const API_KEY = import.meta.env.VITE_TMDB_KEY;
 
 const GENRE_URL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`;
 const TRENDING_URL = `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`;
